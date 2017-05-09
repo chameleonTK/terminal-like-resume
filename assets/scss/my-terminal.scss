@@ -1,0 +1,39 @@
+.my-terminal {
+    width: 100%;
+    height: 100%;
+}
+
+.my-terminal > tbody{
+    >.topcol{
+        .image{
+            height: inherit;
+        }
+    }
+
+    >.middlecol{
+        td{
+            height: inherit;
+        }
+        height: 100%;
+    }
+
+    >.bottomcol{
+        
+    }
+
+    >.terminalcol > td{
+        vertical-align: top
+    }
+
+    .horizontalcol{
+        >.image{
+            
+        }
+    }
+
+    .verticalcol{
+        >.image{
+            height: inherit;
+        }
+    }
+}
