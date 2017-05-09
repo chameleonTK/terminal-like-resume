@@ -1,0 +1,21 @@
+{
+  "name": "terminal",
+  "authors": [
+    "Pakawat Nakwijit <kramatk@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "boostrap#^3.3.7",
+    "angular": "^1.6.4"
+  }
+}
