@@ -150,6 +150,13 @@ function($q, Files, $window){
                 return file.type=="folder" && file.name==args[0]
             })
 
+            if (!file) {
+                return {
+                    "successful":false,
+                    "messages":["cd: "+args[0]+": No such file or directory"]
+                }
+            }
+
             if (file.name=="blog") {
                 $window.open("http://wp.curve.in.th", '_blank');
             } else if (file.name=="twitter") {
@@ -391,8 +398,17 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                 init_text.push("");
                 init_text.push("*** TYPE `man` to see all aviable commands ***");
 
-                terminalAutoWriteTexts(init_text);
-                
+                terminalAutoWriteTexts(init_text)
+                .then(function(){
+                    return terminalAutoWrite("cat README.md", true)
+                }).then(function(){
+                    vm.command = "cat README.md";
+                    keyDown({
+                        keyCode:13,
+                        preventDefault:function(){}
+                    })
+                });
+
                 
             }
 
@@ -414,7 +430,7 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                     })
                 }, $q.resolve());
 
-                writePromise.then(function(){
+                return writePromise.then(function(){
                     return terminalAutoWrite(terminalName(), true);
                 })
             }
@@ -500,7 +516,7 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                 }
             }
 
-            $document.bind('keydown', function (event) {
+            function keyDown(event) {
                 switch(event.keyCode) {
                     case 8: {
                         // backspace
@@ -591,9 +607,9 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                     default:
                         return true;
                 }
-            });
+            }
 
-            $document.bind('keypress', function (event) {
+            function keyPress (event) {
                 if (vm.typerAviable) {
                     $timeout(function(){
                         terminalWriteChar(event.key)
@@ -601,7 +617,10 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                     })
                     event.preventDefault();
                 }
-            });
+            }
+
+            $document.bind('keydown', keyDown);
+            $document.bind('keypress', keyPress);
         }
     }
 }]);

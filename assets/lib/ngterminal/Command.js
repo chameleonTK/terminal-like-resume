@@ -149,6 +149,13 @@ function($q, Files, $window){
                 return file.type=="folder" && file.name==args[0]
             })
 
+            if (!file) {
+                return {
+                    "successful":false,
+                    "messages":["cd: "+args[0]+": No such file or directory"]
+                }
+            }
+
             if (file.name=="blog") {
                 $window.open("http://wp.curve.in.th", '_blank');
             } else if (file.name=="twitter") {
