@@ -1,5 +1,9 @@
 angular.module('ngterminal')
-.factory('Command', ["$q", "Files", function($q, Files){
+.factory('Command', [
+    "$q", 
+    "Files", 
+    "$window",
+function($q, Files, $window){
 
     return {
         execute:execute
@@ -138,6 +142,38 @@ angular.module('ngterminal')
         }
     }
 
+    function commandcd(cmd, args){
+        if (args.length==1) {
+
+            var file = Files.getFiles().find(function(file){
+                return file.type=="folder" && file.name==args[0]
+            })
+
+            if (file.name=="blog") {
+                $window.open("http://wp.curve.in.th", '_blank');
+            } else if (file.name=="twitter") {
+                $window.open("https://twitter.com/ChameleonTK", '_blank');
+            }
+
+            return {
+                "successful":true,
+                "messages":[]
+            }
+        } else {
+            if (args.length>1) {
+                return {
+                    "successful":false,
+                    "messages":["cd: Not support multiple files"]
+                }
+            } else {
+                return {
+                    "successful":false,
+                    "messages":["cd: Invalid arguments"]
+                }
+            }
+        }
+    }
+
     function execute(cmd, args){
         return $q(function(resolve, reject){
             switch(cmd) {
@@ -151,6 +187,10 @@ angular.module('ngterminal')
                 }
                 case "man": {
                     resolve(commandman(cmd, args))
+                    return true;
+                }
+                case "cd": {
+                    resolve(commandcd(cmd, args))
                     return true;
                 }
                 default:{
