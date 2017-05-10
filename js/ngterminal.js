@@ -564,6 +564,7 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                             if (vm.commandHistoryPointer > 0) {
                                 $timeout(function(){
                                     vm.commandHistoryPointer--;
+                                    vm.command = vm.commandHistory[vm.commandHistoryPointer];
                                     terminalReplace(terminalName()+vm.commandHistory[vm.commandHistoryPointer]);
                                 })
                             }
@@ -579,6 +580,7 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                             if (vm.commandHistoryPointer < vm.commandHistory.length-1) {
                                 $timeout(function(){
                                     vm.commandHistoryPointer++;
+                                    vm.command = vm.commandHistory[vm.commandHistoryPointer];
                                     terminalReplace(terminalName()+vm.commandHistory[vm.commandHistoryPointer]);
                                 })
                             }
