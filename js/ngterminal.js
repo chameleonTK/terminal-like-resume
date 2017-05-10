@@ -159,6 +159,8 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
             vm.writePromise = $q.resolve();
             vm.typerAviable = false;
             vm.command = "";
+            vm.commandHistory = [""];
+            vm.commandHistoryPointer = 0;
 
             scope.plainText = [""]
             scope.lines = [""];
@@ -201,18 +203,17 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                 return $q(function(resolve, reject){
                     var index = 0;
                     $interval(function(){
-                        terminalWriteChar(text[index]);
-                        index++;
-
                         if (index>=text.length) {
                             if (!nonewline) {
                                 newLine();
                             }
                             vm.typerAviable = true;
                             resolve();
+                        } else {
+                            terminalWriteChar(text[index]);
                         }
-
-                    }, vm.options.write_delay, text.length)
+                        index++;
+                    }, vm.options.write_delay, text.length+1)
                 })
             }
 
@@ -285,14 +286,20 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                         if (vm.typerAviable) {
                             $timeout(function(){
                                 terminalDelChar()
-                                vm.command = vm.command.slice(0, -1);
+                                vm.command = vm.command.slice(0, -1);        
                             })
                         }
+
                         event.preventDefault();
                         return true;
                     }
                     case 9: {
                         // tab
+                        if (vm.typerAviable) {
+                            $timeout(function(){
+                                
+                            })
+                        }
                         event.preventDefault();
                         return true;
                     }
@@ -301,21 +308,30 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                         if (vm.typerAviable) {
                             $timeout(function(){
                                 newLine();
-                                var args = vm.command
-                                            .split(" ")
-                                            .filter(function(str){ 
-                                                return str;
-                                            })
 
-                                var command = args.shift();
-                                vm.typerAviable = false;
+                                if (vm.command) {
+                                    var args = vm.command
+                                                .split(" ")
+                                                .filter(function(str){ 
+                                                    return str;
+                                                })
 
-                                Command.execute(command, args)
-                                .then(function(resp){
-                                    terminalAutoWriteTexts(resp.messages)
-                                });
+                                    var command = args.shift();
 
-                                vm.command = "";
+                                    /// update command history
+                                    vm.commandHistory[vm.commandHistory.length-1] = vm.command;
+                                    vm.commandHistory.push("");
+                                    vm.commandHistoryPointer = vm.commandHistory.length-1;
+
+                                    Command.execute(command, args)
+                                    .then(function(resp){
+                                        terminalAutoWriteTexts(resp.messages)
+                                    });
+
+                                    vm.command = ""; 
+                                } else {
+                                    terminalAutoWrite(terminalName(), true);
+                                }
                             })
                         }
                         event.preventDefault();
@@ -323,11 +339,29 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                     }
                     case 38: {
                         // up
+                        if (vm.typerAviable) {
+                            if (vm.commandHistoryPointer > 0) {
+                                $timeout(function(){
+                                    vm.commandHistoryPointer--;
+                                    terminalReplace(terminalName()+vm.commandHistory[vm.commandHistoryPointer]);
+                                })
+                            }
+                        }
+
                         event.preventDefault();
                         return true;
                     }
                     case 40: {
                         // down
+                        if (vm.typerAviable) {
+                            console.log(vm.commandHistory);
+                            if (vm.commandHistoryPointer < vm.commandHistory.length-1) {
+                                $timeout(function(){
+                                    vm.commandHistoryPointer++;
+                                    terminalReplace(terminalName()+vm.commandHistory[vm.commandHistoryPointer]);
+                                })
+                            }
+                        }
                         event.preventDefault();
                         return true;
                     }
@@ -345,18 +379,6 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                     event.preventDefault();
                 }
             });
-            
-            
-            // target.on("keypress", function (e) {
-            //     if(scope.showPrompt || scope.allowTypingWriteDisplaying)
-            //         scope.keypress(e.which);
-            
-            // });
-
-            // target.on("keydown", function (e) {
-
-            
-            // });
         }
     }
 }]);
