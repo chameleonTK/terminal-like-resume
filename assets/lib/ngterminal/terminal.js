@@ -161,6 +161,7 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                         return true;
                     }
                     case 13: {
+                        //enter
                         if (vm.typerAviable) {
                             $timeout(function(){
                                 newLine();

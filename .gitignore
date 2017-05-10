@@ -4,6 +4,7 @@ node_modules
 
 js/app.js
 js/app.min.js
+js/ga.js
 
 css/app.css
 css/app.min.css
