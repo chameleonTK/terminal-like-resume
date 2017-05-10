@@ -10,8 +10,8 @@
     <link href="css/app.min.css" rel="stylesheet"/>
 </head>
 <body>
-    <div class="container" style="height: 100%;">
-        <table class="my-terminal">
+    <div class="container" style="height: 100%;position: relative;">
+        <table class="terminal-frame">
             <tr class="terminalcol topcol">
                 <td colspan="2">
                     <img class="image" src="images/tp-left.png" alt="">
@@ -25,8 +25,8 @@
             </tr>
             <tr class="terminalcol middlecol">
                 <td class="verticalcol"><img class="image" src="images/v-left.png" alt=""></td>
-                <td></td>
-                <td></td>
+                <td colspan="2">
+                </td>
                 <td class="verticalcol"><img class="image" src="images/v-right.png" alt=""></td>
             </tr>
             <tr class="terminalcol bottomcol">
@@ -41,6 +41,15 @@
                 </td>
             </tr>
         </table>
+
+        <div class="terminal-space">
+            <div class="scroll">
+                <div>Last login : Wed May 10 11:11:11 on ttys001</div>
+                <div>imtk@curveinth:~$ </div>
+                
+            </div>
+        </div>
+
     </div>
 </body>
 </html>

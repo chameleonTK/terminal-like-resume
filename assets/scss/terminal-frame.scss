@@ -1,9 +1,9 @@
-.my-terminal {
+.terminal-frame {
     width: 100%;
     height: 100%;
 }
 
-.my-terminal > tbody{
+.terminal-frame > tbody{
     >.topcol{
         .image{
             height: inherit;
@@ -11,10 +11,10 @@
     }
 
     >.middlecol{
+        height: 100%;
         td{
             height: inherit;
         }
-        height: 100%;
     }
 
     >.bottomcol{
