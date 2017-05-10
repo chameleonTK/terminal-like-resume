@@ -1,0 +1,4 @@
+<div ng-repeat="line in lines track by $index">
+    <span ng-bind-html="line"></span>
+    <span class="terminal-cursor" ng-if="$index==lines.length-1"></span>
+</div>

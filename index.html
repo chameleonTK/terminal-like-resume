@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="myapp">
 <head>
     <title>I'm Pakawat Nakwijit</title>
     <script src="bower_components/angular/angular.min.js" type="text/javascript"></script>
     <script src="bower_components/angular-animate/angular-animate.min.js" type="text/javascript"></script>
-    <script src="js/app.min.js" type="text/javascript"></script>
+    <script src="js/ngterminal.js" type="text/javascript"></script>
+    <script src="js/app.js" type="text/javascript"></script>
 
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="css/app.min.css" rel="stylesheet"/>
@@ -44,14 +45,10 @@
 
         <div class="terminal-space">
             <div class="scroll">
-                <div>Last login : Wed May 10 11:11:11 on ttys001</div>
-                <div>
-                    imtk@curveinth:~$ 
-                    <span class="terminal-cursor"></span>
-                </div>
-                
+                <terminal></terminal>
             </div>
         </div>
+
 
     </div>
 </body>

@@ -1,1 +1,1 @@
-console.log("hello")
+angular.module('myapp', ["ngterminal"])

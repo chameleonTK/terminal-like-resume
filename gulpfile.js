@@ -34,11 +34,25 @@ gulp.task('js', function() {
         .pipe(gulp.dest('js/'));
 });
 
+gulp.task('lib', function() {
+    return gulp.src([
+            'assets/lib/ngterminal/ngterminal.js',
+            'assets/lib/ngterminal/**/*.js'
+        ])
+        .pipe(concat('ngterminal.js'))
+        .pipe(gulp.dest('js/'))
+        .pipe(uglify())
+        .on('error', gutil.log)
+        .pipe(rename('ngterminal.min.js'))
+        .pipe(gulp.dest('js/'));
+});
+
 // Watch Files For Changes
 gulp.task('watch', function() {
     gulp.watch('assets/js/**/*.js', ['js']);
     gulp.watch('assets/scss/*.scss', ['scss']);
+    gulp.watch('assets/lib/ngterminal/**/*.js', ['lib']);
 });
 
 // Default Task
-gulp.task('default', ['scss','js', 'watch']);
+gulp.task('default', ['scss','js', 'watch', "lib"]);
