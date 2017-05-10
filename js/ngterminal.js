@@ -20,8 +20,10 @@ angular.module('ngterminal')
     "$interval",
     "$document",
     "$timeout",
+    "$location",
+    "$anchorScroll",
     "Command",
-function($sce, $q, $interval, $document, $timeout, Command){
+function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Command){
 
     var vm = this;
     return {
@@ -70,6 +72,7 @@ function($sce, $q, $interval, $document, $timeout, Command){
                 scope.plainText.push("")
                 scope.lines.push("")
                 vm.currentIndex++;
+                scrolldown(vm.currentIndex)
             }
 
             function terminalAutoWrite(text, nonewline){
@@ -141,6 +144,16 @@ function($sce, $q, $interval, $document, $timeout, Command){
                         return "&#59;"
                     default:
                         return char;
+                }
+            }
+
+
+            function scrolldown(commandIndex){
+                var newHash = "command-"+commandIndex
+                if ($location.hash() !== newHash) {
+                    $location.hash(newHash);
+                } else {
+                    $anchorScroll();
                 }
             }
 
