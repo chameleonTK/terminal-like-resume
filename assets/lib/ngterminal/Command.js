@@ -1,13 +1,5 @@
 angular.module('ngterminal')
-.factory('Command', ["$q", function($q){
-
-    var files = [
-        {"name":"blog", "type":"folder", "size":"29k"},
-        {"name":"contact.txt", "type":"file", "size":"32"},
-        {"name":"profile.txt", "type":"file", "size":"2"},
-        {"name":"twitter", "type":"folder", "size":"430"},
-        {"name":"README.md", "type":"file", "size":"3723"},
-    ];
+.factory('Command', ["$q", "Files", function($q, Files){
 
     return {
         execute:execute
@@ -34,11 +26,11 @@ angular.module('ngterminal')
                 if (targetFile!=args[args.length-1]) {
                     return {
                         "successful":false,
-                        "messages":["ls: Not support list multiple files"]
+                        "messages":["ls: Not support multiple files"]
                     }
                 }
 
-                var file = files.find(function(file){
+                var file = Files.getFiles().find(function(file){
                     return file.type=="folder" && file.name==targetFile
                 })
 
@@ -57,7 +49,7 @@ angular.module('ngterminal')
         }
 
         if (lflag) {
-            var messages = files.reduce(function(acc, file){
+            var messages = Files.getFiles().reduce(function(acc, file){
                 var size = file.size;
                 while(size.length<6){
                     size = " "+size;
@@ -76,7 +68,7 @@ angular.module('ngterminal')
                 "messages":messages
             };
         } else if (aflag){
-            var messages = files.reduce(function(acc, file){
+            var messages = Files.getFiles().reduce(function(acc, file){
                 acc.push(file.name)
                 return acc;
             }, [])
@@ -86,8 +78,8 @@ angular.module('ngterminal')
                 "messages":messages
             };
         } else {
-            var half = Math.ceil(files.length/2);
-            var messages = files.reduce(function(acc, file, index){
+            var half = Math.ceil(Files.getFiles().length/2);
+            var messages = Files.getFiles().reduce(function(acc, file, index){
                 if (index<half){
                     acc.push(file.name);
                 } else {
@@ -108,11 +100,45 @@ angular.module('ngterminal')
         }
     }
 
+    function commandcat(cmd, args){
+        if (args.length==1) {
+            var contents = Files.read(args[0]);
+            if (contents===false) {
+                return {
+                    "successful":false,
+                    "messages":["cat: "+args[0]+": No such file or directory"]
+                }
+            } else {
+                return {
+                    "successful":true,
+                    "messages":contents
+                }
+            }
+            
+        } else {
+            if (args.length>1) {
+                return {
+                    "successful":false,
+                    "messages":["cat: Not support multiple files"]
+                }
+            } else {
+                return {
+                    "successful":false,
+                    "messages":["cat: Invalid arguments"]
+                }
+            }
+        }
+    }
+
     function execute(cmd, args){
         return $q(function(resolve, reject){
             switch(cmd) {
                 case "ls": {
                     resolve(commandls(cmd, args))
+                    return true;
+                }
+                case "cat": {
+                    resolve(commandcat(cmd, args))
                     return true;
                 }
                 default:{
