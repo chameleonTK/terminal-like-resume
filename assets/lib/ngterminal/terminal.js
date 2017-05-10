@@ -34,18 +34,8 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                 var d = new Date();
                 var init_text = vm.options.init_text.slice(0);
                 init_text.push("Last login : "+d.toUTCString()+" on ttys001");
-
-                vm.writePromise = init_text.reduce(function(acc, text){
-                    return acc.then(function(){
-                        return terminalAutoWrite(text);
-                    })
-                }, $q.resolve());
-
-                vm.writePromise.then(function(){
-                    return terminalAutoWrite(terminalName(), true);
-                }).then(function(){
-                    vm.typerAviable = true;
-                })
+                terminalAutoWriteTexts(init_text);
+                
                 
             }
 
@@ -58,6 +48,18 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                 scope.lines.push("")
                 vm.currentIndex++;
                 scrolldown(vm.currentIndex)
+            }
+
+            function terminalAutoWriteTexts(texts){
+                var writePromise = texts.reduce(function(acc, text){
+                    return acc.then(function(){
+                        return terminalAutoWrite(text);
+                    })
+                }, $q.resolve());
+
+                writePromise.then(function(){
+                    return terminalAutoWrite(terminalName(), true);
+                })
             }
 
             function terminalAutoWrite(text, nonewline){
@@ -165,8 +167,20 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                         if (vm.typerAviable) {
                             $timeout(function(){
                                 newLine();
-                                terminalAutoWrite(terminalName(), true);
-                                Command.execute(vm.command);
+                                var args = vm.command
+                                            .split(" ")
+                                            .filter(function(str){ 
+                                                return str;
+                                            })
+
+                                var command = args.shift();
+                                vm.typerAviable = false;
+
+                                Command.execute(command, args)
+                                .then(function(resp){
+                                    terminalAutoWriteTexts(resp.messages)
+                                });
+
                                 vm.command = "";
                             })
                         }
