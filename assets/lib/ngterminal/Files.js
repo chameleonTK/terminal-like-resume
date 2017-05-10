@@ -4,7 +4,8 @@ angular.module('ngterminal')
     var files = [
         {"name":"blog", "type":"folder", "size":"29k"},
         {"name":"contact.txt", "type":"file", "size":"32"},
-        {"name":"experiences.txt", "type":"file", "size":"1026"},
+        {"name":"experiences.txt", "type":"file", "size":"1k"},
+        {"name":"man", "type":"file", "size":"292"},
         {"name":"twitter", "type":"folder", "size":"430"},
         {"name":"README.md", "type":"file", "size":"3723"},
     ];
@@ -115,6 +116,16 @@ angular.module('ngterminal')
                 " ",
                 "  - Exhibited at Google I/O 2013, Thailand",
                 " ",
+            ]
+        } else if (file.name=="man"){
+            return [
+                "Common commands:",
+                "    ls  [-al] [folder]   list directory contents",
+                "    cd  [folder]         change directory",
+                "    cat [file]           concatenate and print files",
+                "    man                  format and display the on-line manual pages",
+                " ",
+                "For help on any individual command run tweet to me at @chameleontk",
             ]
         }
 

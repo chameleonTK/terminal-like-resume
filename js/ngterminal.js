@@ -131,6 +131,14 @@ angular.module('ngterminal')
         }
     }
 
+    function commandman(cmd, args){
+        var contents = Files.read("man");
+        return {
+            "successful":true,
+            "messages":contents
+        }
+    }
+
     function execute(cmd, args){
         return $q(function(resolve, reject){
             switch(cmd) {
@@ -140,6 +148,10 @@ angular.module('ngterminal')
                 }
                 case "cat": {
                     resolve(commandcat(cmd, args))
+                    return true;
+                }
+                case "man": {
+                    resolve(commandman(cmd, args))
                     return true;
                 }
                 default:{
@@ -164,7 +176,8 @@ angular.module('ngterminal')
     var files = [
         {"name":"blog", "type":"folder", "size":"29k"},
         {"name":"contact.txt", "type":"file", "size":"32"},
-        {"name":"experiences.txt", "type":"file", "size":"1026"},
+        {"name":"experiences.txt", "type":"file", "size":"1k"},
+        {"name":"man", "type":"file", "size":"292"},
         {"name":"twitter", "type":"folder", "size":"430"},
         {"name":"README.md", "type":"file", "size":"3723"},
     ];
@@ -276,6 +289,16 @@ angular.module('ngterminal')
                 "  - Exhibited at Google I/O 2013, Thailand",
                 " ",
             ]
+        } else if (file.name=="man"){
+            return [
+                "Common commands:",
+                "    ls  [-al] [folder]   list directory contents",
+                "    cd  [folder]         change directory",
+                "    cat [file]           concatenate and print files",
+                "    man                  format and display the on-line manual pages",
+                " ",
+                "For help on any individual command run tweet to me at @chameleontk",
+            ]
         }
 
         return [];
@@ -325,6 +348,9 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                 var d = new Date();
                 var init_text = vm.options.init_text.slice(0);
                 init_text.push("Last login : "+d.toUTCString()+" on ttys001");
+                init_text.push("");
+                init_text.push("*** TYPE `man` to see all aviable commands ***");
+
                 terminalAutoWriteTexts(init_text);
                 
                 

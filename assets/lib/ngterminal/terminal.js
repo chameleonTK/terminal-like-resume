@@ -36,6 +36,9 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                 var d = new Date();
                 var init_text = vm.options.init_text.slice(0);
                 init_text.push("Last login : "+d.toUTCString()+" on ttys001");
+                init_text.push("");
+                init_text.push("*** TYPE `man` to see all aviable commands ***");
+
                 terminalAutoWriteTexts(init_text);
                 
                 

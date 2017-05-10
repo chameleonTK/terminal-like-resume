@@ -130,6 +130,14 @@ angular.module('ngterminal')
         }
     }
 
+    function commandman(cmd, args){
+        var contents = Files.read("man");
+        return {
+            "successful":true,
+            "messages":contents
+        }
+    }
+
     function execute(cmd, args){
         return $q(function(resolve, reject){
             switch(cmd) {
@@ -139,6 +147,10 @@ angular.module('ngterminal')
                 }
                 case "cat": {
                     resolve(commandcat(cmd, args))
+                    return true;
+                }
+                case "man": {
+                    resolve(commandman(cmd, args))
                     return true;
                 }
                 default:{
