@@ -1,0 +1,22 @@
+/* Ascii Art Dictionary CSS 2001 Andreas Freise */
+.ascii-art{
+    pre{
+        background: none;
+        border: none;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    pre         { font-family: Courier New, Courier, monospace; line-height: 110%; margin: 0px; overflow: visible; } 
+    pre.center  { font-family: Courier New, Courier, monospace; overflow: visible; text-align: center; } 
+    pre.no-space    { font-family: Courier New, Courier, monospace; line-height: 95%; letter-spacing: 0pt; overflow: visible;} 
+    pre.titel   { font-family: Courier New, Courier, monospace;  } 
+    pre.news    { font-family: Courier New, Courier, monospace; line-height: 100%; letter-spacing: 0pt; margin:0px; overflow: visible;} 
+    pre.coll1   { font-family: Courier New, Courier, monospace; line-height: 100%; letter-spacing: 0pt; margin:0px; overflow: visible;} 
+    pre.arrow   { font-family: Courier New, Courier, monospace; line-height: 100%; letter-spacing: 0pt; margin:0px; overflow: visible;} 
+    pre.logo    { font-family: Fixed, Courier New, Courier, monospace; line-height: 100%; letter-spacing: 0pt;  margin-bottom:2px; vertical-align:top; overflow: visible;} 
+    pre.anim    { font-family: Courier New, Courier, monospace; line-height: 100%; letter-spacing: 0pt;  overflow: visible;} 
+
+
+
+}
