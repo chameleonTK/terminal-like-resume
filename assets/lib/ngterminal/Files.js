@@ -30,7 +30,7 @@ angular.module('ngterminal')
                 " ",
                 "I graduated in Computer Engineering, Kasetsart University. ",
                 "I develop an interest in Programming Languages, NLP and AI.",
-                "However, you also can talk to me about movies, adventure trips, and cat.",
+                "However, you also can talk to me about movies, adventure trips, and cats.",
                 " ",
                 "Now, I am working as a web developer at Maxile co.,ltd and ",
                 "writing a blog about whatever I am interested especially about cats.",

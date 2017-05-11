@@ -8,7 +8,8 @@ angular.module('ngterminal')
     "$location",
     "$anchorScroll",
     "Command",
-function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Command){
+    "Writer",
+function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Command, Writer){
 
     var vm = this;
     return {
@@ -18,18 +19,17 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
             vm.options = {
                 "write_delay":10,
                 "init_text":[],
-                "terminal_name":"imtk@curveinth"
+                "terminal_name":"imtk@curveinth",
+                "scope":scope
             }
 
-            vm.currentIndex = 0;
-            vm.writePromise = $q.resolve();
-            vm.typerAviable = false;
+            vm.writer = null;
+            scope.plainText = [""]
+            scope.lines = [""];
+
             vm.command = "";
             vm.commandHistory = [""];
             vm.commandHistoryPointer = 0;
-
-            scope.plainText = [""]
-            scope.lines = [""];
 
             init();
             function init(){
@@ -39,9 +39,10 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                 init_text.push("");
                 init_text.push("*** TYPE `man` to see all aviable commands ***");
 
-                terminalAutoWriteTexts(init_text)
+                vm.writer = new Writer(vm.options);
+                vm.writer.terminalAutoWriteTexts(init_text)
                 .then(function(){
-                    return terminalAutoWrite("cat README.md", true)
+                    return vm.writer.terminalAutoWrite("cat README.md", true)
                 }).then(function(){
                     vm.command = "cat README.md";
                     keyDown({
@@ -53,117 +54,13 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                 
             }
 
-            function terminalName(){
-                return vm.options.terminal_name+":~$ ";
-            }
-
-            function newLine(){
-                scope.plainText.push("")
-                scope.lines.push("")
-                vm.currentIndex++;
-                scrolldown(vm.currentIndex)
-            }
-
-            function terminalAutoWriteTexts(texts){
-                var writePromise = texts.reduce(function(acc, text){
-                    return acc.then(function(){
-                        return terminalAutoWrite(text);
-                    })
-                }, $q.resolve());
-
-                return writePromise.then(function(){
-                    return terminalAutoWrite(terminalName(), true);
-                })
-            }
-
-            function terminalAutoWrite(text, nonewline){
-                vm.typerAviable = false;
-                return $q(function(resolve, reject){
-                    var index = 0;
-                    $interval(function(){
-                        if (index>=text.length) {
-                            if (!nonewline) {
-                                newLine();
-                            }
-                            vm.typerAviable = true;
-                            resolve();
-                        } else {
-                            terminalWriteChar(text[index]);
-                        }
-                        index++;
-                    }, vm.options.write_delay, text.length+1)
-                })
-            }
-
-            function terminalWriteChar(char){
-                scope.plainText[vm.currentIndex] += escapeHTML(char)
-                scope.lines[vm.currentIndex] = $sce.trustAsHtml(scope.plainText[vm.currentIndex]);
-            }
-
-            function terminalDelChar(noTerminalName){
-                var line = scope.plainText[vm.currentIndex];
-                // 9 is offet for ":~$ "
-                if (!noTerminalName) {
-                    if (line.length <= vm.options.terminal_name.length+9){
-                        return false;
-                    }
-                }
-
-                if (line[line.length-1]==";") {
-                    while (line[line.length-1]!="&") {
-                        line = line.slice(0, -1);
-                        scope.plainText[vm.currentIndex] = line;
-                        scope.lines[vm.currentIndex] = $sce.trustAsHtml(line);
-                    }
-                    scope.plainText[vm.currentIndex] = line.slice(0, -1);
-                    scope.lines[vm.currentIndex] = $sce.trustAsHtml(scope.plainText[vm.currentIndex]);
-                } else {
-                    scope.plainText[vm.currentIndex] = line.slice(0, -1);
-                    scope.lines[vm.currentIndex] = $sce.trustAsHtml(scope.plainText[vm.currentIndex]);
-                }
-            }
-
-            function terminalReplace(str){
-                scope.plainText[vm.currentIndex] = str;
-                scope.lines[vm.currentIndex] = $sce.trustAsHtml(scope.plainText[vm.currentIndex]);
-            }
-
-            function escapeHTML(char){
-                switch(char) {
-                    case " ":
-                        return "&nbsp;";
-                    case "\"":
-                        return "&quot;"
-                    case "<":
-                        return "&lt;"
-                    case ">":
-                        return "&gt;"
-                    case "&":
-                        return "&amp;"
-                    case ";":
-                        return "&#59;"
-                    default:
-                        return char;
-                }
-            }
-
-
-            function scrolldown(commandIndex){
-                var newHash = "command-"+commandIndex
-                if ($location.hash() !== newHash) {
-                    $location.hash(newHash);
-                } else {
-                    $anchorScroll();
-                }
-            }
-
             function keyDown(event) {
                 switch(event.keyCode) {
                     case 8: {
                         // backspace
-                        if (vm.typerAviable) {
+                        if (vm.writer.aviable()) {
                             $timeout(function(){
-                                terminalDelChar()
+                                vm.writer.terminalDelChar()
                                 vm.command = vm.command.slice(0, -1);        
                             })
                         }
@@ -173,7 +70,7 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                     }
                     case 9: {
                         // tab
-                        if (vm.typerAviable) {
+                        if (vm.writer.aviable()) {
                             $timeout(function(){
                                 
                             })
@@ -183,9 +80,9 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                     }
                     case 13: {
                         //enter
-                        if (vm.typerAviable) {
+                        if (vm.writer.aviable()) {
                             $timeout(function(){
-                                newLine();
+                                vm.writer.newLine();
 
                                 if (vm.command) {
                                     var args = vm.command
@@ -203,12 +100,12 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
 
                                     Command.execute(command, args)
                                     .then(function(resp){
-                                        terminalAutoWriteTexts(resp.messages)
+                                        vm.writer.terminalAutoWriteTexts(resp.messages)
                                     });
 
                                     vm.command = ""; 
                                 } else {
-                                    terminalAutoWrite(terminalName(), true);
+                                    vm.writer.terminalAutoWrite(vm.writer.terminalName(), true);
                                 }
                             })
                         }
@@ -217,12 +114,12 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                     }
                     case 38: {
                         // up
-                        if (vm.typerAviable) {
+                        if (vm.writer.aviable()) {
                             if (vm.commandHistoryPointer > 0) {
                                 $timeout(function(){
                                     vm.commandHistoryPointer--;
                                     vm.command = vm.commandHistory[vm.commandHistoryPointer];
-                                    terminalReplace(terminalName()+vm.commandHistory[vm.commandHistoryPointer]);
+                                    vm.writer.terminalReplace(vm.writer.terminalName()+vm.commandHistory[vm.commandHistoryPointer]);
                                 })
                             }
                         }
@@ -232,13 +129,12 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
                     }
                     case 40: {
                         // down
-                        if (vm.typerAviable) {
-                            console.log(vm.commandHistory);
+                        if (vm.writer.aviable()) {
                             if (vm.commandHistoryPointer < vm.commandHistory.length-1) {
                                 $timeout(function(){
                                     vm.commandHistoryPointer++;
                                     vm.command = vm.commandHistory[vm.commandHistoryPointer];
-                                    terminalReplace(terminalName()+vm.commandHistory[vm.commandHistoryPointer]);
+                                    vm.writer.terminalReplace(vm.writer.terminalName()+vm.commandHistory[vm.commandHistoryPointer]);
                                 })
                             }
                         }
@@ -251,9 +147,9 @@ function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Com
             }
 
             function keyPress (event) {
-                if (vm.typerAviable) {
+                if (vm.writer.aviable()) {
                     $timeout(function(){
-                        terminalWriteChar(event.key)
+                        vm.writer.terminalWriteChar(event.key)
                         vm.command += event.key;
                     })
                     event.preventDefault();
