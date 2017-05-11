@@ -87,7 +87,7 @@ function($q, Files, $window){
                 if (index<half){
                     acc.push(file.name);
                 } else {
-                    while (acc[index-half].length < 14) {
+                    while (acc[index-half].length < 18) {
                         acc[index-half]+=" ";
                     }
 
@@ -194,6 +194,22 @@ function($q, Files, $window){
                 }
                 case "man": {
                     resolve(commandman(cmd, args))
+                    return true;
+                }
+                case "help": {
+                    resolve(commandman(cmd, args))
+                    return true;
+                }
+                case "hi": {
+                    resolve({ successful:true,messages:["Hi, How are you?"]})
+                    return true;
+                }
+                case "say": {
+                    resolve({ successful:true,messages:args})
+                    return true;
+                }
+                case "echo": {
+                    resolve({ successful:true,messages:args})
                     return true;
                 }
                 case "cd": {
