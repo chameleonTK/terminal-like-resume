@@ -2,14 +2,11 @@ angular.module('ngterminal')
 .directive("terminal",[
     "$sce", 
     "$q",
-    "$interval",
     "$document",
     "$timeout",
-    "$location",
-    "$anchorScroll",
     "Command",
     "Writer",
-function($sce, $q, $interval, $document, $timeout, $location, $anchorScroll, Command, Writer){
+function($sce, $q, $document, $timeout, Command, Writer){
 
     var vm = this;
     return {
