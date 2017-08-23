@@ -25,7 +25,7 @@ function($q, $location, $anchorScroll, $interval, $sce){
         var scope = options.scope;
 
         function terminalName(){
-            return vm.options.terminal_name+":~$ ";
+            return "<b>"+vm.options.terminal_name+":~$</b> ";
         }
 
         function newLine(){
@@ -52,7 +52,7 @@ function($q, $location, $anchorScroll, $interval, $sce){
             }, $q.resolve());
 
             return writePromise.then(function(){
-                return terminalAutoWrite(terminalName(), true);
+                return terminalAutoWrite(terminalName(), true, true);
             })
         }
 
@@ -60,7 +60,7 @@ function($q, $location, $anchorScroll, $interval, $sce){
             return vm.typerAviable;
         }
 
-        function terminalAutoWrite(text, nonewline){
+        function terminalAutoWrite(text, nonewline, noescape){
             vm.typerAviable = false;
             return $q(function(resolve, reject){
                 var index = 0;
@@ -72,23 +72,27 @@ function($q, $location, $anchorScroll, $interval, $sce){
                         vm.typerAviable = true;
                         resolve();
                     } else {
-                        terminalWriteChar(text[index]);
+                        terminalWriteChar(text[index], noescape);
                     }
                     index++;
                 }, vm.options.write_delay, text.length+1)
             })
         }
 
-        function terminalWriteChar(char){
-            scope.plainText[vm.currentIndex] += escapeHTML(char)
+        function terminalWriteChar(char, noescape){
+            scope.plainText[vm.currentIndex] += noescape?char:escapeHTML(char);
             scope.lines[vm.currentIndex] = $sce.trustAsHtml(scope.plainText[vm.currentIndex]);
+        }
+
+        function getTerminalOffet(){
+            // 9 is offet for ":~$ "
+            return 11;
         }
 
         function terminalDelChar(noTerminalName){
             var line = scope.plainText[vm.currentIndex];
-            // 9 is offet for ":~$ "
             if (!noTerminalName) {
-                if (line.length <= vm.options.terminal_name.length+9){
+                if (line.length <= vm.options.terminal_name.length+getTerminalOffet()){
                     return false;
                 }
             }

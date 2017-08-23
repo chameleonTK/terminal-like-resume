@@ -102,7 +102,7 @@ function($sce, $q, $document, $timeout, Command, Writer){
 
                                     vm.command = ""; 
                                 } else {
-                                    vm.writer.terminalAutoWrite(vm.writer.terminalName(), true);
+                                    vm.writer.terminalAutoWrite(vm.writer.terminalName(), true, true);
                                 }
                             })
                         }
