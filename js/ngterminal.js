@@ -78,14 +78,14 @@ angular.module('ngterminal')
                 "Hi, I'm Pakawat Nakwijit.",
                 " ",
                 "I graduated in Computer Engineering, Kasetsart University. ",
-                "I develop an interest in Programming Languages, NLP and AI.",
-                "However, you also can talk to me about movies, adventure trips, and cats.",
+                "I have developed an interest in Programming Languages, NLP and AI since I was in university.",
+                "However, you are welcome to discuss with me about movies, adventure, and cats.",
                 " ",
                 "Now, I am working as a web developer at Maxile co.,ltd and ",
-                "writing a blog about whatever I am interested especially about cats.",
+                "writing a blog about whatever I am interested in especially about cats.",
                 " ",
-                "If you would like to get in touch with me, whether it be for technical issue, or to just say hi, ",
-                "don't heritage to send me an email or a tweet.",
+                "If you would like to get in touch with me, whether it be for technical issues, or to just say hi, ",
+                "don't heritate to send me an email or a tweet.",
                 " ",
                 "my email : pakawat.nk@gmail.com",
                 "my twitter : @chameleontk",
@@ -109,39 +109,39 @@ angular.module('ngterminal')
                 "    Application for tracking import/export document's status",
                 " ",
                 "  - Neekrung Magazine http://www.neekrung.com",
-                "    implemented a responsive website for Neekrung magazines.",
+                "    implemented a responsive website for Neekrung magazine.",
                 " ",
                 "  - eBMN project http://ebmn.cdd.go.th",
-                "    An online census form which need to handle more than million of data records.",
+                "    An online census form which is capable of keeping more than million of data records.",
                 " ",
                 "Freelance",
                 "  - Curator at TEDxKasetsartU",
                 "    curated speakers to build an interesting talk at TEDx conference",
                 " ",
                 "  - Attended DevFest Hackathon 2016 ",
-                "    as '25 Finalists' with Khunkrukanoomping – An intelligent teacher(chatbot) on LINE platform",
+                "    as '25 Finalists' with Khunkrukanoomping – An intelligent chatbot on LINE platform",
                 " ",
                 "  - Developed FrontEnd http://www.petpolar.com",
-                "    A social network focusing on pet lover. I work on frontend development including web site animation, ",
-                "    user interface and social feature.",
+                "    An online community for pet lovers. I worked on frontend development including web site animation, ",
+                "    user interface and social features.",
                 " ",
                 "  - Waste challenge Game on website http://www.wastechallenge.com",
-                "    participate with WWF&Hilton for awareness campaign on waste segregation. ",
-                "    It's a game that user have to choose the right type of 20 waste in 1 minute.",
+                "    participated with WWF&Hilton for awareness campaign on waste segregation. ",
+                "    It's a game which users are to choose the right category of 20 wastes in 1 minute.",
                 " ",
                 "2015",
                 "  - Published a research paper in ICSEC 2015, Chiangmai, Thailand",
                 "    'A Parser Generator Using the Grammar Flow Graph'. An easier parser generator works for context-free language with acceptable performance.",
                 " ",
                 "  - Antikopae Project with Dr.Paruj Ratanaworabhan",
-                "    worked on Clone detection system for investigating research documents.",
+                "    worked on investigation of plagiarism in research field.",
                 " ",
                 "2014",
                 "  - Internship student at NIST, Nara, Japan",
-                "    researched about code refactoring in Software Design and Analysis Laboratory",
+                "    conducted a research about code refactoring in Software Design and Analysis Laboratory",
                 " ",
                 "  - Asuku Project",
-                "    An artificial intelligence conversation application use learning model from data in http://www.ask.fm",
+                "    An artificial intelligence conversation application  which uses learning model from data in http://www.ask.fm",
                 " ",
                 "2011 - 2013",
                 "  - Teaching Assistant for Computer and Programming, Compiler,",
@@ -171,7 +171,7 @@ angular.module('ngterminal')
                 "Common commands:",
                 "    ls  [-al] [folder]   list directory contents",
                 "    cd  [folder]         change directory",
-                "    cat [file]           concatenate and print files",
+                "    cat [file]           concatenate and print a file",
                 "    man                  format and display the on-line manual pages",
                 " ",
                 "For help on any individual command run tweet to me at @chameleontk",
@@ -214,7 +214,7 @@ function($q, $location, $anchorScroll, $interval, $sce){
         var scope = options.scope;
 
         function terminalName(){
-            return vm.options.terminal_name+":~$ ";
+            return "<b>"+vm.options.terminal_name+":~$</b> ";
         }
 
         function newLine(){
@@ -241,7 +241,7 @@ function($q, $location, $anchorScroll, $interval, $sce){
             }, $q.resolve());
 
             return writePromise.then(function(){
-                return terminalAutoWrite(terminalName(), true);
+                return terminalAutoWrite(terminalName(), true, true);
             })
         }
 
@@ -249,7 +249,7 @@ function($q, $location, $anchorScroll, $interval, $sce){
             return vm.typerAviable;
         }
 
-        function terminalAutoWrite(text, nonewline){
+        function terminalAutoWrite(text, nonewline, noescape){
             vm.typerAviable = false;
             return $q(function(resolve, reject){
                 var index = 0;
@@ -261,23 +261,27 @@ function($q, $location, $anchorScroll, $interval, $sce){
                         vm.typerAviable = true;
                         resolve();
                     } else {
-                        terminalWriteChar(text[index]);
+                        terminalWriteChar(text[index], noescape);
                     }
                     index++;
                 }, vm.options.write_delay, text.length+1)
             })
         }
 
-        function terminalWriteChar(char){
-            scope.plainText[vm.currentIndex] += escapeHTML(char)
+        function terminalWriteChar(char, noescape){
+            scope.plainText[vm.currentIndex] += noescape?char:escapeHTML(char);
             scope.lines[vm.currentIndex] = $sce.trustAsHtml(scope.plainText[vm.currentIndex]);
+        }
+
+        function getTerminalOffet(){
+            // 9 is offet for ":~$ "
+            return 11;
         }
 
         function terminalDelChar(noTerminalName){
             var line = scope.plainText[vm.currentIndex];
-            // 9 is offet for ":~$ "
             if (!noTerminalName) {
-                if (line.length <= vm.options.terminal_name.length+9){
+                if (line.length <= vm.options.terminal_name.length+getTerminalOffet()){
                     return false;
                 }
             }
@@ -428,7 +432,7 @@ function($sce, $q, $document, $timeout, Command, Writer){
 
                                     vm.command = ""; 
                                 } else {
-                                    vm.writer.terminalAutoWrite(vm.writer.terminalName(), true);
+                                    vm.writer.terminalAutoWrite(vm.writer.terminalName(), true, true);
                                 }
                             })
                         }
