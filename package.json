@@ -3,20 +3,26 @@
   "version": "1.0.0",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bower": "bower",
+    "gulp": "gulp"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "gulp":"*",
-    "gulp-util":"*",
-    "gulp-concat":"*",
-    "gulp-sass":"*",
-    "gulp-clean-css":"*",
-    "gulp-rename":"*",
-    "shelljs":"*",
-    "gulp-uglify":"*",
-    "gulp-util":"*"
+    
+  },
+  "devDependencies": {
+    "gulp": "3.9.1",
+    "bower": "^1.8.8",
+    "gulp-clean-css": "*",
+    "gulp-cli": "^2.2.0",
+    "gulp-concat": "*",
+    "gulp-rename": "*",
+    "gulp-sass": "*",
+    "gulp-uglify": "*",
+    "gulp-util": "*",
+    "shelljs": "*"
   }
 }
