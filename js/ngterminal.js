@@ -81,8 +81,8 @@ angular.module('ngterminal')
                 "I have developed an interest in Programming Languages, NLP and AI since I was in university.",
                 "However, you are welcome to discuss with me about movies, adventure, and cats.",
                 " ",
-                "Now, I am working as a web developer at Maxile co.,ltd and ",
-                "writing a blog about whatever I am interested in especially about cats.",
+                "Now, I'm doing my PhD at Queen Mary University, UK.",
+                "This blog is my personal blog about my notes on every day life and whatever I am interested in especially about cats.",
                 " ",
                 "If you would like to get in touch with me, whether it be for technical issues, or to just say hi, ",
                 "don't heritate to send me an email or a tweet.",
@@ -187,6 +187,7 @@ angular.module('ngterminal')
 
 }]);
 
+console.log("ww")
 angular.module('ngterminal')
 .directive("terminal",[
     "$sce", 
@@ -196,11 +197,11 @@ angular.module('ngterminal')
     "Command",
     "Writer",
 function($sce, $q, $document, $timeout, Command, Writer){
-
+    console.log("ww")
     var vm = this;
     return {
         scope:{},
-        templateUrl: "templates/terminal.html",
+        templateUrl: $sce.trustAsResourceUrl("templates/terminal.html"),
         link:function(scope){
             vm.options = {
                 "write_delay":10,

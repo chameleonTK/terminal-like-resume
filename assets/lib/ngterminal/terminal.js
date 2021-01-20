@@ -11,7 +11,7 @@ function($sce, $q, $document, $timeout, Command, Writer){
     var vm = this;
     return {
         scope:{},
-        templateUrl: "templates/terminal.html",
+        templateUrl: $sce.trustAsResourceUrl("templates/terminal.html"),
         link:function(scope){
             vm.options = {
                 "write_delay":10,
