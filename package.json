@@ -12,7 +12,7 @@
   "description": "",
   "dependencies": {},
   "devDependencies": {
-    "gulp": "3.9.1",
+    "gulp": "4.0.2",
     "bower": "^1.8.8",
     "gulp-clean-css": "*",
     "gulp-cli": "^2.2.0",
