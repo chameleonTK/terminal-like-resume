@@ -31,3 +31,7 @@
     -o-animation:      blink 1s infinite; /* Opera 12+ */
     animation:         blink 1s infinite; /* IE 10+, Fx 29+ */
 }
+
+.terminal-line {
+  word-wrap: break-word;
+}

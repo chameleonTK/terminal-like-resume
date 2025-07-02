@@ -24,7 +24,7 @@ function($q, Files, $window){
             }
 
             if (file.name=="blog") {
-                $window.open("http://wp.curve.in.th", '_blank');
+                $window.open("https://chameleontk.github.io", '_blank');
             } else if (file.name=="twitter") {
                 $window.open("https://twitter.com/ChameleonTK", '_blank');
             }

@@ -146,7 +146,7 @@ function($sce, $q, $document, $timeout, Command, Writer){
             function keyPress (event) {
                 if (vm.writer.aviable()) {
                     $timeout(function(){
-                        vm.writer.terminalWriteChar(event.key)
+                        vm.writer.terminalWriteChar(event.key, 0)
                         vm.command += event.key;
                     })
                     event.preventDefault();

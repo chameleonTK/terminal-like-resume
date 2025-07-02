@@ -72,15 +72,27 @@ function($q, $location, $anchorScroll, $interval, $sce){
                         vm.typerAviable = true;
                         resolve();
                     } else {
-                        terminalWriteChar(text[index], noescape);
+                        terminalWriteChar(text, index, noescape);
                     }
                     index++;
                 }, vm.options.write_delay, text.length+1)
             })
         }
 
-        function terminalWriteChar(char, noescape){
-            scope.plainText[vm.currentIndex] += noescape?char:escapeHTML(char);
+        function terminalWriteChar(text, index, noescape){
+            const char = text[index];
+            if (text[index]==" ") {
+                // Handle [space][space]
+                if (index+1 < text.length && text[index+1]==" ") {
+                    scope.plainText[vm.currentIndex] += noescape?char:escapeHTML(char);
+                } else {
+                    // Don't escapse one space
+                    scope.plainText[vm.currentIndex] += char;
+                }
+            } else {
+                scope.plainText[vm.currentIndex] += noescape?char:escapeHTML(char);
+            }
+            
             scope.lines[vm.currentIndex] = $sce.trustAsHtml(scope.plainText[vm.currentIndex]);
         }
 

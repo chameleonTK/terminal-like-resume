@@ -76,95 +76,96 @@ angular.module('ngterminal')
         if (file.name=="README.md") {
             return [
                 "Hi, I'm Pakawat Nakwijit.",
-                " ",
-                "I graduated in Computer Engineering, Kasetsart University. ",
-                "I have developed an interest in Programming Languages, NLP and AI since I was in university.",
-                "However, you are welcome to discuss with me about movies, adventure, and cats.",
-                " ",
-                "Now, I'm doing my PhD at Queen Mary University, UK.",
-                "This blog is my personal blog about my notes on every day life and whatever I am interested in especially about cats.",
-                " ",
+                "  ",
+                "I graduated in Computer Engineering from Kasetsart University, did my master in Artificial Intelligence at University of St. Andrews and later completed my PhD at Queen Mary University of London, UK. My research focused on large language models (LLMs), Thai NLP, Computational Linguistics, Language Variation, and Model Interpretability.",
+                "  ",
+                "By day (and sometimes night), I'm a full-stack web developer with years of experience in PHP, Python, and JavaScript. I've worked with various frameworks like Laravel and Vue. Lately, I've been especially excited about building a website with Inertia.js",
+                "  ",
+                "Outside of academia and prefessional work, I'm just a humbly ordinary guy who loves travelling, learning about people and their beliefs, and collecting stories along the way. I'm a board game enthusiast, an adventure seeker, a loyal cat slave, a try-to-be blogger and a big fan of The Big Bang Theory.",
+                "  ",
+                "This blog is my personal corner of the internet—where I share notes from everyday life, bits of research, and things I find fascinating (especially cats, always cats)",
+                "  ",
                 "If you would like to get in touch with me, whether it be for technical issues, or to just say hi, ",
-                "don't heritate to send me an email or a tweet.",
-                " ",
-                "my email : pakawat.nk@gmail.com",
-                "my twitter : @chameleontk",
-                " ",
-                "And learn more about me at http://wp.curve.in.th",
+                "don't heritate to drop me an email or a tweet.",
+                "  ",
+                "My email : pakawat.nk at gmail.com",
+                "My twitter : @chameleontk",
+                "  ",
+                "And learn more about me at https://chameleontk.github.io",
             ]
         } else if (file.name=="contact.txt"){
             return [
                 "email : pakawat.nk@gmail.com",
                 "twitter : @chameleontk",
-                " ",
-                "And learn more about me at http://wp.curve.in.th",
+                "  ",
+                "And learn more about me at https://chameleontk.github.io",
             ]
         } else if (file.name=="experiences.txt"){
             return [
                 "2016 - present",
                 "Software Developer at Maxile co.,ltd.",
                 "  - CMS for website http://www.1for100.or.th",
-                " ",
+                "  ",
                 "  - Ionic application: e-Tracking",
                 "    Application for tracking import/export document's status",
-                " ",
+                "  ",
                 "  - Neekrung Magazine http://www.neekrung.com",
                 "    implemented a responsive website for Neekrung magazine.",
-                " ",
+                "  ",
                 "  - eBMN project http://ebmn.cdd.go.th",
                 "    An online census form which is capable of keeping more than million of data records.",
-                " ",
+                "  ",
                 "Freelance",
                 "  - Curator at TEDxKasetsartU",
                 "    curated speakers to build an interesting talk at TEDx conference",
-                " ",
+                "  ",
                 "  - Attended DevFest Hackathon 2016 ",
                 "    as '25 Finalists' with Khunkrukanoomping – An intelligent chatbot on LINE platform",
-                " ",
+                "  ",
                 "  - Developed FrontEnd http://www.petpolar.com",
                 "    An online community for pet lovers. I worked on frontend development including web site animation, ",
                 "    user interface and social features.",
-                " ",
+                "  ",
                 "  - Waste challenge Game on website http://www.wastechallenge.com",
                 "    participated with WWF&Hilton for awareness campaign on waste segregation. ",
                 "    It's a game which users are to choose the right category of 20 wastes in 1 minute.",
-                " ",
+                "  ",
                 "2015",
                 "  - Published a research paper in ICSEC 2015, Chiangmai, Thailand",
                 "    'A Parser Generator Using the Grammar Flow Graph'. An easier parser generator works for context-free language with acceptable performance.",
-                " ",
+                "  ",
                 "  - Antikopae Project with Dr.Paruj Ratanaworabhan",
                 "    worked on investigation of plagiarism in research field.",
-                " ",
+                "  ",
                 "2014",
                 "  - Internship student at NIST, Nara, Japan",
                 "    conducted a research about code refactoring in Software Design and Analysis Laboratory",
-                " ",
+                "  ",
                 "  - Asuku Project",
                 "    An artificial intelligence conversation application  which uses learning model from data in http://www.ask.fm",
-                " ",
+                "  ",
                 "2011 - 2013",
                 "  - Teaching Assistant for Computer and Programming, Compiler,",
                 "    Computer Architecture and Microprocessor",
-                " ",
+                "  ",
                 "  - Kasetsart University Medal of Honor Recipient: 2011, 2012, 2013",
-                " ",
-                "  - Treasurer of Computer Engineering’s Student Body Organization",
-                " ",
+                "  ",
+                "  - Treasurer of Computer Engineering's Student Body Organization",
+                "  ",
                 "  - Organizer and Master of Ceremony in many activies such as Toktakcamp, Konnec#6, eXceed Camp",
                 "    training camp for sophomore&junior student at Kasetsart University",
-                " ",
+                "  ",
                 "  - Attended 11th Young Webmaster Camp",
                 "    recieced honor for the best creative website (Punmap.com)",
-                " ",
+                "  ",
                 "  - Speaker in Barcamp Bangkok and Barcamp Bangkhen",
                 "    'Scratch ง่ายๆ ใน 1 นาที' in Barcamp Bangkhen 4, 2013; ",
                 "    'Phalcon # The fastest PHP Framework' in Barcamp Bangkok 2014 ",
                 "    'Robot 1st Times' in Barcamp Bangkhen 5, 2014;",
                 "    'มาเป็นทาสแมวกันเถอะ' in Barcamp Bangkhen 6,2015;",
-                " ",
+                "  ",
                 "  - Exhibited at Google I/O 2013, Thailand",
-                " ",
+                "  ",
             ]
         } else if (file.name=="man"){
             return [
@@ -173,7 +174,7 @@ angular.module('ngterminal')
                 "    cd  [folder]         change directory",
                 "    cat [file]           concatenate and print a file",
                 "    man                  format and display the on-line manual pages",
-                " ",
+                "  ",
                 "For help on any individual command run tweet to me at @chameleontk",
             ]
         }
@@ -187,7 +188,159 @@ angular.module('ngterminal')
 
 }]);
 
-console.log("ww")
+angular.module('ngterminal')
+.factory('Writer', [
+    "$q",
+    "$location",
+    "$anchorScroll",
+    "$interval",
+    "$sce",
+function($q, $location, $anchorScroll, $interval, $sce){
+
+    return function(options){
+        var vm = this;
+        vm.options = options;
+        vm.terminalName = terminalName;
+        vm.newLine = newLine;
+        vm.terminalAutoWriteTexts = terminalAutoWriteTexts;
+        vm.terminalAutoWrite = terminalAutoWrite;
+        vm.terminalWriteChar = terminalWriteChar;
+        vm.terminalDelChar = terminalDelChar;
+        vm.terminalReplace = terminalReplace;
+        vm.aviable = aviable;
+
+        vm.currentIndex = 0;
+        vm.typerAviable = false;
+
+        var scope = options.scope;
+
+        function terminalName(){
+            return "<b>"+vm.options.terminal_name+":~$</b> ";
+        }
+
+        function newLine(){
+            scope.plainText.push("")
+            scope.lines.push("")
+            vm.currentIndex++;
+            scrolldown(vm.currentIndex)
+        }
+
+        function scrolldown(commandIndex){
+            var newHash = "command-"+commandIndex
+            if ($location.hash() !== newHash) {
+                $location.hash(newHash);
+            } else {
+                $anchorScroll();
+            }
+        }
+
+        function terminalAutoWriteTexts(texts){
+            var writePromise = texts.reduce(function(acc, text){
+                return acc.then(function(){
+                    return terminalAutoWrite(text);
+                })
+            }, $q.resolve());
+
+            return writePromise.then(function(){
+                return terminalAutoWrite(terminalName(), true, true);
+            })
+        }
+
+        function aviable(){
+            return vm.typerAviable;
+        }
+
+        function terminalAutoWrite(text, nonewline, noescape){
+            vm.typerAviable = false;
+            return $q(function(resolve, reject){
+                var index = 0;
+                $interval(function(){
+                    if (index>=text.length) {
+                        if (!nonewline) {
+                            newLine();
+                        }
+                        vm.typerAviable = true;
+                        resolve();
+                    } else {
+                        terminalWriteChar(text, index, noescape);
+                    }
+                    index++;
+                }, vm.options.write_delay, text.length+1)
+            })
+        }
+
+        function terminalWriteChar(text, index, noescape){
+            const char = text[index];
+            if (text[index]==" ") {
+                // Handle [space][space]
+                if (index+1 < text.length && text[index+1]==" ") {
+                    scope.plainText[vm.currentIndex] += noescape?char:escapeHTML(char);
+                } else {
+                    // Don't escapse one space
+                    scope.plainText[vm.currentIndex] += char;
+                }
+            } else {
+                scope.plainText[vm.currentIndex] += noescape?char:escapeHTML(char);
+            }
+            
+            scope.lines[vm.currentIndex] = $sce.trustAsHtml(scope.plainText[vm.currentIndex]);
+        }
+
+        function getTerminalOffet(){
+            // 9 is offet for ":~$ "
+            return 11;
+        }
+
+        function terminalDelChar(noTerminalName){
+            var line = scope.plainText[vm.currentIndex];
+            if (!noTerminalName) {
+                if (line.length <= vm.options.terminal_name.length+getTerminalOffet()){
+                    return false;
+                }
+            }
+
+            if (line[line.length-1]==";") {
+                while (line[line.length-1]!="&") {
+                    line = line.slice(0, -1);
+                    scope.plainText[vm.currentIndex] = line;
+                    scope.lines[vm.currentIndex] = $sce.trustAsHtml(line);
+                }
+                scope.plainText[vm.currentIndex] = line.slice(0, -1);
+                scope.lines[vm.currentIndex] = $sce.trustAsHtml(scope.plainText[vm.currentIndex]);
+            } else {
+                scope.plainText[vm.currentIndex] = line.slice(0, -1);
+                scope.lines[vm.currentIndex] = $sce.trustAsHtml(scope.plainText[vm.currentIndex]);
+            }
+        }
+
+        function terminalReplace(str){
+            scope.plainText[vm.currentIndex] = str;
+            scope.lines[vm.currentIndex] = $sce.trustAsHtml(scope.plainText[vm.currentIndex]);
+        }
+
+        function escapeHTML(char){
+            switch(char) {
+                case " ":
+                    return "&nbsp;";
+                case "\"":
+                    return "&quot;"
+                case "<":
+                    return "&lt;"
+                case ">":
+                    return "&gt;"
+                case "&":
+                    return "&amp;"
+                case ";":
+                    return "&#59;"
+                default:
+                    return char;
+            }
+        }
+
+    }
+    
+}]);
+
 angular.module('ngterminal')
 .directive("terminal",[
     "$sce", 
@@ -197,7 +350,7 @@ angular.module('ngterminal')
     "Command",
     "Writer",
 function($sce, $q, $document, $timeout, Command, Writer){
-    console.log("ww")
+
     var vm = this;
     return {
         scope:{},
@@ -336,7 +489,7 @@ function($sce, $q, $document, $timeout, Command, Writer){
             function keyPress (event) {
                 if (vm.writer.aviable()) {
                     $timeout(function(){
-                        vm.writer.terminalWriteChar(event.key)
+                        vm.writer.terminalWriteChar(event.key, 0)
                         vm.command += event.key;
                     })
                     event.preventDefault();
@@ -347,147 +500,6 @@ function($sce, $q, $document, $timeout, Command, Writer){
             $document.bind('keypress', keyPress);
         }
     }
-}]);
-
-angular.module('ngterminal')
-.factory('Writer', [
-    "$q",
-    "$location",
-    "$anchorScroll",
-    "$interval",
-    "$sce",
-function($q, $location, $anchorScroll, $interval, $sce){
-
-    return function(options){
-        var vm = this;
-        vm.options = options;
-        vm.terminalName = terminalName;
-        vm.newLine = newLine;
-        vm.terminalAutoWriteTexts = terminalAutoWriteTexts;
-        vm.terminalAutoWrite = terminalAutoWrite;
-        vm.terminalWriteChar = terminalWriteChar;
-        vm.terminalDelChar = terminalDelChar;
-        vm.terminalReplace = terminalReplace;
-        vm.aviable = aviable;
-
-        vm.currentIndex = 0;
-        vm.typerAviable = false;
-
-        var scope = options.scope;
-
-        function terminalName(){
-            return "<b>"+vm.options.terminal_name+":~$</b> ";
-        }
-
-        function newLine(){
-            scope.plainText.push("")
-            scope.lines.push("")
-            vm.currentIndex++;
-            scrolldown(vm.currentIndex)
-        }
-
-        function scrolldown(commandIndex){
-            var newHash = "command-"+commandIndex
-            if ($location.hash() !== newHash) {
-                $location.hash(newHash);
-            } else {
-                $anchorScroll();
-            }
-        }
-
-        function terminalAutoWriteTexts(texts){
-            var writePromise = texts.reduce(function(acc, text){
-                return acc.then(function(){
-                    return terminalAutoWrite(text);
-                })
-            }, $q.resolve());
-
-            return writePromise.then(function(){
-                return terminalAutoWrite(terminalName(), true, true);
-            })
-        }
-
-        function aviable(){
-            return vm.typerAviable;
-        }
-
-        function terminalAutoWrite(text, nonewline, noescape){
-            vm.typerAviable = false;
-            return $q(function(resolve, reject){
-                var index = 0;
-                $interval(function(){
-                    if (index>=text.length) {
-                        if (!nonewline) {
-                            newLine();
-                        }
-                        vm.typerAviable = true;
-                        resolve();
-                    } else {
-                        terminalWriteChar(text[index], noescape);
-                    }
-                    index++;
-                }, vm.options.write_delay, text.length+1)
-            })
-        }
-
-        function terminalWriteChar(char, noescape){
-            scope.plainText[vm.currentIndex] += noescape?char:escapeHTML(char);
-            scope.lines[vm.currentIndex] = $sce.trustAsHtml(scope.plainText[vm.currentIndex]);
-        }
-
-        function getTerminalOffet(){
-            // 9 is offet for ":~$ "
-            return 11;
-        }
-
-        function terminalDelChar(noTerminalName){
-            var line = scope.plainText[vm.currentIndex];
-            if (!noTerminalName) {
-                if (line.length <= vm.options.terminal_name.length+getTerminalOffet()){
-                    return false;
-                }
-            }
-
-            if (line[line.length-1]==";") {
-                while (line[line.length-1]!="&") {
-                    line = line.slice(0, -1);
-                    scope.plainText[vm.currentIndex] = line;
-                    scope.lines[vm.currentIndex] = $sce.trustAsHtml(line);
-                }
-                scope.plainText[vm.currentIndex] = line.slice(0, -1);
-                scope.lines[vm.currentIndex] = $sce.trustAsHtml(scope.plainText[vm.currentIndex]);
-            } else {
-                scope.plainText[vm.currentIndex] = line.slice(0, -1);
-                scope.lines[vm.currentIndex] = $sce.trustAsHtml(scope.plainText[vm.currentIndex]);
-            }
-        }
-
-        function terminalReplace(str){
-            scope.plainText[vm.currentIndex] = str;
-            scope.lines[vm.currentIndex] = $sce.trustAsHtml(scope.plainText[vm.currentIndex]);
-        }
-
-        function escapeHTML(char){
-            switch(char) {
-                case " ":
-                    return "&nbsp;";
-                case "\"":
-                    return "&quot;"
-                case "<":
-                    return "&lt;"
-                case ">":
-                    return "&gt;"
-                case "&":
-                    return "&amp;"
-                case ";":
-                    return "&#59;"
-                default:
-                    return char;
-            }
-        }
-
-    }
-    
 }]);
 
 angular.module('ngterminal')
@@ -566,7 +578,7 @@ function($q, Files, $window){
             }
 
             if (file.name=="blog") {
-                $window.open("http://wp.curve.in.th", '_blank');
+                $window.open("https://chameleontk.github.io", '_blank');
             } else if (file.name=="twitter") {
                 $window.open("https://twitter.com/ChameleonTK", '_blank');
             }

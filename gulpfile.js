@@ -1,58 +1,69 @@
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var concat = require('gulp-concat');
-var sass = require('gulp-sass');
-var cleanCSS = require('gulp-clean-css');
-var rename = require('gulp-rename');
-var sh = require('shelljs');
-var uglify = require('gulp-uglify');
-var gutil = require('gulp-util');
+const { watch, series, parallel } = require('gulp');
+const { src, dest } = require('gulp');
+const log = require('fancy-log');
+const concat = require('gulp-concat');
+const sass = require('gulp-sass')(require('sass'));
+const cleanCSS = require('gulp-clean-css');
+const rename = require('gulp-rename');
+// const sh = require('shelljs');
+const uglify = require('gulp-uglify');
+const webserver = require('gulp-webserver');
 
-gulp.task('scss', function() {
-    return gulp.src([
-          'assets/scss/*.scss',
-        ])
-        .pipe(sass())
-        .on('error', sass.logError)
-        .pipe(concat('app.css'))
-        .pipe(cleanCSS({compatibility: 'ie8'}))
-        .pipe(rename('app.min.css'))
-        .pipe(gulp.dest('css/'));
-});
+function compileSCSS(cb) {
+    return src([
+        'assets/scss/*.scss',
+    ])
+    .pipe(sass())
+    .on('error', sass.logError)
+    .pipe(concat('app.css'))
+    .pipe(cleanCSS({compatibility: 'ie8'}))
+    .pipe(rename('app.min.css'))
+    .pipe(dest('css/'));
+}
 
-// Concatenate & Minify JS
-gulp.task('js', function() {
-    return gulp.src([
-            'assets/js/app.js',
-            'assets/js/**/*.js'
-        ])
-        .pipe(concat('app.js'))
-        .pipe(gulp.dest('js/'))
-        .pipe(uglify())
-        .on('error', gutil.log)
-        .pipe(rename('app.min.js'))
-        .pipe(gulp.dest('js/'));
-});
+function compileJS(cb) {
+    return src([
+        'assets/js/app.js',
+        'assets/js/**/*.js'
+    ])
+    .pipe(concat('app.js'))
+    .pipe(dest('js/'))
+    .pipe(uglify())
+    .on('error', log.error)
+    .pipe(rename('app.min.js'))
+    .pipe(dest('js/'))
+}
 
-gulp.task('lib', function() {
-    return gulp.src([
-            'assets/lib/ngterminal/ngterminal.js',
-            'assets/lib/ngterminal/**/*.js'
-        ])
-        .pipe(concat('ngterminal.js'))
-        .pipe(gulp.dest('js/'))
-        .pipe(uglify())
-        .on('error', gutil.log)
-        .pipe(rename('ngterminal.min.js'))
-        .pipe(gulp.dest('js/'));
-});
 
-// Watch Files For Changes
-gulp.task('watch', function() {
-    gulp.watch('assets/js/**/*.js', ['js']);
-    gulp.watch('assets/scss/*.scss', ['scss']);
-    gulp.watch('assets/lib/ngterminal/**/*.js', ['lib']);
-});
+function compileLib(cb) {
+    return src([
+        'assets/lib/ngterminal/ngterminal.js',
+        'assets/lib/ngterminal/**/*.js'
+    ])
+    .pipe(concat('ngterminal.js'))
+    .pipe(dest('js/'))
+    .pipe(uglify())
+    .on('error', log.error)
+    .pipe(rename('ngterminal.min.js'))
+    .pipe(dest('js/'))
+}
 
-// Default Task
-gulp.task('default', ['scss','js', 'watch', "lib"]);
+function runWebserver(cb) {
+    return src("./")
+    .pipe(webserver({
+      livereload: true,
+      directoryListing: false,
+      open: false,
+      fallback: "./index.html"
+    }));
+}
+
+
+exports.build = series(compileLib, compileJS, compileSCSS);
+exports.default = function() {
+    runWebserver();
+    watch('assets/js/**/*.js', compileJS);
+    watch('assets/scss/*.scss', compileSCSS);
+    watch('assets/lib/ngterminal/**/*.js', compileLib);
+};
+

@@ -1,12 +1,12 @@
 {
   "name": "terminal",
   "authors": [
-    "Pakawat Nakwijit <kramatk@gmail.com>"
+      "Pakawat Nakwijit <kramatk@gmail.com>"
   ],
   "description": "",
   "main": "",
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://chameleontk.github.io/",
   "ignore": [
     "**/.*",
     "node_modules",
