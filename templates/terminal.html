@@ -1,5 +1,5 @@
 <div>
-    <div id="command-{{$index}}" ng-repeat="line in lines track by $index">
+    <div id="command-{{$index}}" ng-repeat="line in lines track by $index" style="text-align: justify;">
         <span ng-bind-html="line" class="terminal-line"></span>
         <span class="terminal-cursor" ng-if="$index==lines.length-1"></span>
     </div>
